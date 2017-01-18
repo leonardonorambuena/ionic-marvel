@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Comics de Marvel</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="card-background-page">
+    <ion-card *ngFor="let comic of comics">
+
+      <ion-item>
+        <h2>{{comic.title}}</h2>
+        <p>{{comic.modified}}</p>
+      </ion-item>
+
+      <img src="{{comic.thumbnail.path}}.jpg">
+
+      <ion-row>
+        <ion-col>
+          <button ion-button icon-left clear small>
+            <ion-icon name="copy"></ion-icon>
+            <div>Paginas {{comic.pageCount}}</div>
+          </button>
+        </ion-col>
+        <ion-col>
+          <button ion-button icon-left clear small>
+            <ion-icon name="text"></ion-icon>
+            <div>4 Comments</div>
+          </button>
+        </ion-col>
+        <ion-col center text-center>
+          <ion-note>
+            11h ago
+          </ion-note>
+        </ion-col>
+      </ion-row>
+
+</ion-card>
+</ion-content>
