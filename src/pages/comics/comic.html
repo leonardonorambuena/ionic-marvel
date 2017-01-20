@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Comics de Marvel</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-searchbar [(ngModel)]="searchComicText" (keydown)="searchComics($event)">
+    
+  </ion-searchbar>
+<ion-spinner *ngIf="!totalComics"></ion-spinner>
+  <ion-item *ngIf="totalComics">
+    Total: {{totalComics}} 
+  </ion-item>
+    <ion-card *ngFor="let comic of comics">
+      <img src="{{comic.thumbnail.path}}.jpg" class="img-home">
+      <ion-card-content>
+      <ion-card-title>
+            {{comic.title}}<
+      </ion-card-title>
+        <p *ngIf="comic.description">
+          {{comic.description}}
+        </p>
+    </ion-card-content>
+      <ion-row>
+        <ion-col>
+            <ion-icon name="copy" item-left color="danger">
+              {{comic.pageCount}} paginas
+            </ion-icon>
+            
+        </ion-col>
+        <ion-col>
+            <ion-icon name="logo-usd" item-left color="danger">
+              {{comic.prices[0].price}}
+            </ion-icon>
+        </ion-col>
+        <ion-col>
+            <ion-icon name="calendar" color="danger">
+                {{comic.modified}}
+            </ion-icon>
+        </ion-col>
+      </ion-row>
+
+  </ion-card>
+
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+   <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Cargando más comics...">></ion-infinite-scroll-content>
+ </ion-infinite-scroll>
+</ion-content>
+
+
