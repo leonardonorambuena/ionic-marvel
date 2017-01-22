@@ -2,12 +2,13 @@ import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 import { MarvelComicsService } from './services/marvel/comics.service'
+import { CharacterService } from './services/marvel/characters.service'
 import { TabsPage } from '../pages/tabs/tabs';
 
 
 @Component({
   templateUrl: 'app.html',
-  providers : [MarvelComicsService]
+  providers : [MarvelComicsService, CharacterService]
 })
 export class MyApp {
   rootPage = TabsPage;

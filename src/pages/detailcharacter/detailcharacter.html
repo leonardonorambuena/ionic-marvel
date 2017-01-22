@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>{{character.name}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-card>
+      <img src="{{character.thumbnail.path}}.{{character.thumbnail.extension}}" class="img-home">
+      <ion-card-content>
+      <ion-card-title>
+            {{character.name}}
+      </ion-card-title>
+        <p *ngIf="character.description">
+          {{character.description}}
+        </p>
+    </ion-card-content>
+
+    <ion-row>
+      <ion-col>
+            <ion-note item-left color="danger" *ngFor="let url of character.urls">
+              <a ion-button icon-left target="_blank" href="{{url.url}}">
+                <ion-icon name="link"></ion-icon>      
+                  {{url.type}}
+            </a>
+            </ion-note>
+            
+        </ion-col>
+    </ion-row>
+  </ion-card>
+
+  <ion-list>
+      <ion-item *ngIf="character.comics.available > 0">
+          <ion-list>
+              <h1 color="primary">Comics</h1>
+              <div *ngFor="let comic of character.comics.items">
+                  {{comic.name}}
+              </div>
+          </ion-list>
+      </ion-item>
+
+      <ion-item *ngIf="character.series.available > 0">
+          <ion-list>
+              <h1 color="primary">Series</h1>
+              <div *ngFor="let serie of character.series.items">
+                  {{serie.name}}
+              </div>
+          </ion-list>
+      </ion-item>
+
+      <ion-item *ngIf="character.stories.available > 0">
+          <ion-list>
+              <h1 color="primary">Cuentos</h1>
+              <div *ngFor="let story of character.stories.items">
+                  {{story.name}}
+              </div>
+          </ion-list>
+      </ion-item>
+  </ion-list>
+</ion-content>
+
+

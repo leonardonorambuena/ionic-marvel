@@ -13,7 +13,7 @@
     Total: {{totalComics}} 
   </ion-item>
     <ion-card *ngFor="let comic of comics">
-      <img src="{{comic.thumbnail.path}}.jpg" class="img-home">
+      <img src="{{comic.thumbnail.path}}.{{comic.thumbnail.extension}}" class="img-home">
       <ion-card-content>
       <ion-card-title>
             {{comic.title}}<

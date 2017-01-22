@@ -6,6 +6,8 @@ import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import {ComicPage} from '../pages/comics/comic'
+import {DetailCharacterPage} from '../pages/detailcharacter/detailcharacter'
+import {CharacterPage} from '../pages/characters/character' 
 
 @NgModule({
   declarations: [
@@ -14,6 +16,8 @@ import {ComicPage} from '../pages/comics/comic'
     ContactPage,
     HomePage,
     ComicPage,
+    CharacterPage,
+    DetailCharacterPage,
     TabsPage
   ],
   imports: [
@@ -26,6 +30,8 @@ import {ComicPage} from '../pages/comics/comic'
     ContactPage,
     HomePage,
     ComicPage,
+    CharacterPage,
+    DetailCharacterPage,
     TabsPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]

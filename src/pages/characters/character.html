@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Personajes de Marvel</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-searchbar [(ngModel)]="searchText" (keydown)="searchCharacteres($event)">
+    
+  </ion-searchbar>
+<ion-spinner *ngIf="!total"></ion-spinner>
+  <ion-item *ngIf="total">
+    Total: {{total}} 
+  </ion-item>
+    <ion-card *ngFor="let character of characteres" (click)="show(character)">
+      <img src="{{character.thumbnail.path}}.{{character.thumbnail.extension}}" class="img-home">
+      <ion-card-content>
+      <ion-card-title>
+            {{character.name}}<
+      </ion-card-title>
+        <p *ngIf="character.description">
+          {{character.description}}
+        </p>
+    </ion-card-content>
+      <ion-row>
+        <ion-col>
+            <ion-icon name="copy" item-left color="danger">
+              {{character.comics.available}} Comics disponibles
+            </ion-icon>
+            
+        </ion-col>
+        <ion-col>
+            <ion-icon name="bookmarks" item-left color="danger">
+              {{character.series.available}} Series disponibles
+            </ion-icon>
+        </ion-col>
+        <ion-col>
+            <ion-icon name="megaphone" color="danger">
+                {{character.stories.available}} Cuentos disponibles
+            </ion-icon>
+        </ion-col>
+      </ion-row>
+
+  </ion-card>
+
+  <ion-infinite-scroll *ngIf="count == 20" (ionInfinite)="doInfinite($event)">
+   <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Cargando más personajes...">></ion-infinite-scroll-content>
+ </ion-infinite-scroll>
+</ion-content>
+
+

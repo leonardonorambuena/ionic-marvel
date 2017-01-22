@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
 import {ComicPage} from '../comics/comic'
+import {CharacterPage} from '../characters/character'
 
 @Component({
   selector: 'page-home',
@@ -20,6 +21,9 @@ export class HomePage {
     this.navCtrl.push(ComicPage);
   }
 
+  showCharacteres(){
+    this.navCtrl.push(CharacterPage);
+  }
 
 
 }
