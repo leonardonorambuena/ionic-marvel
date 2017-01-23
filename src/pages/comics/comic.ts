@@ -17,11 +17,13 @@ export class ComicPage {
   protected totalComics : number;
   protected limit : number;
   protected offset : number;
-
   protected noRecords : boolean;
+  protected results : any;
+  protected showResults : boolean;
 
   constructor(public navCtrl: NavController, public marvelService: MarvelComicsService, private toastCtrl: ToastController) {
     this.noRecords = false;
+    this.showResults = false;
   }
 
   ngOnInit(){
@@ -31,27 +33,50 @@ export class ComicPage {
 
   getComics(){
     this.marvelService.getComics().then(res => {
-      this.comics = res.data.results
-      this.countComics = res.data.count
-      this.offset = res.data.offset 
-      this.totalComics = res.data.total
+      this.setValues(res)
     });
   }
 
+  setValues(res:any){
+    this.comics = res.data.results
+    this.countComics = res.data.count
+    this.offset = res.data.offset 
+    this.totalComics = res.data.total
+    if(this.totalComics == 0){
+      this.message("no se encontraron registros","top");
+    }
+  }
+
+  listTitles(event:any){
+    let word = event.target.value;
+    if(event.keyCode === 13){
+      this.showResults = false;
+    }else if(word.length > 0){
+      this.marvelService.searchComics(word,undefined,true)
+      .then(res => {
+        if(res.data.total > 0){
+          this.showResults = true;
+          this.results = res.data.results;
+        }else{
+          this.showResults = false;
+        }
+          
+      })
+    }
+    
+  }
+
+  searchInService(comic:string){
+    this.offset = undefined
+    this.totalComics = null
+    this.marvelService.searchComics(this.searchComicText)
+    .then(res =>{
+      this.setValues(res);
+    })
+  }
   searchComics(word:any){
     if(word.keyCode == 13 && this.searchComicText.length > 2){
-      this.offset = undefined
-      this.totalComics = null
-      this.marvelService.searchComics(this.searchComicText)
-      .then(res =>{
-        this.comics = res.data.results
-        this.countComics = res.data.count
-        this.offset = res.data.offset 
-        this.totalComics = res.data.total
-        if(this.totalComics == 0){
-          this.message("no se encontraron registros","top");
-        }
-      })
+      this.searchInService(this.searchComicText)
     }
 
     if(word.keyCode == 13 && this.searchComicText == ''){
@@ -69,6 +94,14 @@ export class ComicPage {
     toast.present();
     this.searchComicText = '';
     this.getComics();
+  }
+
+  copyResult(id:number, comic:string){
+    this.showResults = false;
+    this.searchComicText = comic
+    this.marvelService.findComic(id).then(res => {
+      this.setValues(res)
+    });
   }
 
   doInfinite(infiniteScroll) {

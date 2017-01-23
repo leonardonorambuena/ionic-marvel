@@ -13,9 +13,7 @@ export class MarvelComicsService{
     constructor(http:Http){
         this.http = http;
         this.baseUrl = getURL("comics");
-
         this.offsetUrl = this.baseUrl +'&offset=' 
-
     }
 
     getComics(offset ?: number){
@@ -30,9 +28,11 @@ export class MarvelComicsService{
                 .catch(this.error);
     }
 
-    searchComics(word: string, offset ? : number){
+    searchComics(word: string, offset ? : number, limit?:boolean){
         if(offset != undefined){
             this.finalUrl = `${this.baseUrl}&titleStartsWith=${word}&offset=${offset}`
+        }else if(limit){
+            this.finalUrl = `${this.baseUrl}&titleStartsWith=${word}&limit=5`
         }else{
             this.finalUrl = `${this.baseUrl}&titleStartsWith=${word}`
         }
@@ -41,6 +41,15 @@ export class MarvelComicsService{
                 .toPromise().then(res => res.json())
                 .catch(this.error);
     }
+
+    findComic(id:number){
+        let url = getURL(`comics/${id}`)
+        console.log(url)
+        return this.http.get(url)
+                .toPromise().then(res => res.json())
+                .catch(this.error);
+    }
+
 
     error(error:any){
         return Promise.reject(error.message || error);

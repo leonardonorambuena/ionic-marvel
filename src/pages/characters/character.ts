@@ -60,9 +60,25 @@ export class CharacterPage{
                 this.total = res.data.total;
                 this.count = res.data.count
                 this.characteres = res.data.results
+
+                if(this.total == 0){
+                    this.message("No se encontraron registros", "top");
+                }
             })
         }
     }
+
+    message(message: string, position: string, duration : number = 3000){
+    let toast = this.toastCtrl.create({
+            message: message,
+            duration: duration,
+            position: position
+          });
+
+    toast.present();
+    this.searchText = '';
+    this.getCharacteres();
+  }
 
 
     doInfinite(infiniteScroll) {
